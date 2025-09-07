@@ -1,0 +1,41 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+.dark-background,
+.light-background {
+  background-size: 75%; /* Adjusts visual size */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+}
+
+
+/* --------------  MOBILE 0-600px -------------- */
+@media (max-width: 600px) {
+  .display-tasks            { padding: 16px; }
+  .filter-actions           { flex-direction: column; align-items: stretch; }
+  .filter-actions > *       { width: 100%; }
+  .task-item                { margin-bottom: 12px; }
+  .task-card                { padding: 12px; }
+  .task-top                 { flex-direction: column; align-items: flex-start; }
+  .task-delete              { width: 100%; margin-top: 6px; }
+}
+
+/* --------------  SMALL TABLET 601-900px -------------- */
+@media (min-width: 601px) and (max-width: 900px) {
+  .display-tasks            { max-width: 90%; }
+  .filter-actions           { flex-wrap: nowrap; }
+  .filter-actions > *       { flex: 0 0 auto; }
+  .task-delete              { width: auto; }
+}
+
+/* --------------  MEDIUM 901-1200px -------------- */
+@media (min-width: 901px) and (max-width: 1200px) {
+  .display-tasks            { max-width: 80%; }
+}
+
+/* --------------  DESKTOP ≥1201px -------------- */
+@media (min-width: 1201px) {
+  .display-tasks            { max-width: 600px; }
+}

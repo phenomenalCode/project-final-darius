@@ -1,22 +1,83 @@
 import express from "express";
 import cors from "cors";
-import mongoose from "mongoose";
+import dotenv from "dotenv";
+import multer from "multer";
 
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/final-project";
-mongoose.connect(mongoUrl);
-mongoose.Promise = Promise;
+import { connectDB } from "./db/db.js";
+import authRoutes from "./routes/auth.js";
+import taskRoutes from "./routes/taskroutes.js";
+import groupRoutes from "./routes/group-routes.js";
+import { authMiddleware } from "./middleware/authmiddleware.js";
 
-const port = process.env.PORT || 8080;
+dotenv.config();
+
 const app = express();
+const port = process.env.PORT || 8080;
 
-app.use(cors());
+// --- Database ---
+connectDB();
+
+// --- CORS Setup ---
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://your-production-frontend.com"
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    console.log("[CORS] Request origin:", origin);
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    callback(new Error("CORS not allowed"));
+  },
+  credentials: true,
+}));
+
+// --- Middleware ---
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
+// --- Request Logger ---
+app.use((req, res, next) => {
+  console.log("\n[REQ] ---------------------------");
+  console.log("Method:", req.method);
+  console.log("URL:", req.url);
+  console.log("Headers:", req.headers);
+  console.log("Body:", req.body);
+  console.log("Query:", req.query);
+  next();
+});
+
+// --- Auth Logger ---
+app.use("/tasks", authMiddleware, (req, res, next) => {
+  console.log("[Auth] req.user set:", req.user);
+  next();
+});
+
+// --- Routes ---
+app.use("/auth", authRoutes);
+app.use("/tasks", taskRoutes);
+app.use("/groups", groupRoutes);
+
+// --- Root Route ---
+app.get("/", (_, res) => {
+  console.log("[Root] Accessed /");
   res.send("Hello Technigo!");
 });
 
-// Start the server
+// --- Start Server ---
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
+  console.log("NODE_ENV:", process.env.NODE_ENV);
+  console.log("MONGO_URI:", process.env.MONGO_URI);
+});
+
+// --- Multer Setup Example for Logging ---
+const upload = multer({ storage: multer.memoryStorage() });
+
+app.post("/debug-upload", upload.single("file"), (req, res) => {
+  console.log("[Upload] req.file:", req.file);
+  console.log("[Upload] req.body:", req.body);
+  res.json({ message: "Upload debug complete" });
 });

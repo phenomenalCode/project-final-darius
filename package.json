@@ -1,7 +1,26 @@
 {
-  "name": "project-final-parent",
+  "name": "backend",
   "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
   "scripts": {
-    "postinstall": "npm install --prefix backend"
+    "start": "babel-node backend/server.js",
+    "dev": "nodemon backend/server.js --exec babel-node"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "gridfs-stream": "^1.1.1",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^8.0.0",
+    "multer-gridfs-storage": "^5.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/node": "^7.28.0",
+    "@babel/preset-env": "^7.28.3",
+    "@vitejs/plugin-react": "^5.0.1",
+    "nodemon": "^3.1.10"
   }
 }

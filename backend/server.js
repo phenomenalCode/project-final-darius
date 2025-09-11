@@ -20,7 +20,7 @@ connectDB();
 // --- CORS Setup ---
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://your-production-frontend.com"
+  "https://project-final-darius-1.onrender.com"
 ];
 
 app.use(cors({

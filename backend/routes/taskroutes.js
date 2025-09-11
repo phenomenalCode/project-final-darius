@@ -89,6 +89,7 @@ router.get("/files/:filename", async (req, res) => {
 router.post("/", authMiddleware, upload.array("files", 5), async (req, res) => {
   try {
     const { task: title, category, projectId, dueDate, description } = req.body;
+    
     const files = await Promise.all((req.files || []).map(saveFileToGridFS));
 
     const safeCategory = category?.trim() || "Other";

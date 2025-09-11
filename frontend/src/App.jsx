@@ -129,7 +129,7 @@ export const App = () => {
 
   const handleLogin = (token) => {
     localStorage.setItem('token', token);
-      setUser({ ...userData, token }); 
+      setUser({ ...user, token }); 
   };
 
   const handleLogout = () => {

@@ -27,8 +27,7 @@ export const authMiddleware = (req, res, next) => {
       groupId: decoded.groupId,
     };
 
-    console.log("[Auth] req.user set:", req.user);
-
+   
     next();
   } catch (err) {
     console.error("[Auth] Error verifying token:", err.message);

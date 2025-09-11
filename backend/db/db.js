@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 export const connectDB = async () => {
-  const mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017/task-manager";
+  const mongoUrl = process.env.MONGO_URI || "mongodb://localhost:27017/task-manager";
 
   try {
     await mongoose.connect(mongoUrl, {
       useNewUrlParser: true,
-      useUnifiedTopology: true,
+      
     });
     console.log("✅ MongoDB connected:", mongoUrl);
   } catch (err) {

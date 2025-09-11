@@ -62,12 +62,15 @@ router.post("/login", async (req, res) => {
 
     // Find user by username o
   const user = await User.findOne({ username }).populate("group");
-
+console.log("[/auth/login] Fetched user:", user);
     if (!user) return res.status(401).json({ error: "User not found" });
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.passwordHash);
+    
+console.log("[/auth/login] Password match:", isMatch);
     if (!isMatch) return res.status(401).json({ error: "Invalid password" });
+    
 
     // Generate JWT
     const token = jwt.sign(

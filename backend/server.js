@@ -19,7 +19,7 @@ connectDB();
 
 // --- CORS Setup ---
 const allowedOrigins = [
-  "http://localhost:5173",
+  "https://project-final-darius.netlify.app",
   "https://project-final-darius-1.onrender.com"
 ];
 

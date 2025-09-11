@@ -60,6 +60,7 @@ const handleSubmit = useCallback(async (e) => {
   try {
     const token = useUserStore.getState().token || localStorage.getItem("token");
     const formData = new FormData();
+    
     formData.append('task', input.trim());
     formData.append('category', category);
     // Don't send group — backend will set it from req.user.groupId
@@ -76,7 +77,7 @@ const handleSubmit = useCallback(async (e) => {
       console.log(key, value instanceof File ? `${value.name} (${value.size} bytes)` : value);
     }
 
-    const res = await fetch('http://localhost:8080/tasks', {
+    const res = await fetch('https://project-final-darius-1.onrender.com/tasks', {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}` },
       body: formData,

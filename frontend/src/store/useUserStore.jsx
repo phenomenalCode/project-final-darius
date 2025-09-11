@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_BASE = "http://localhost:8080";
+
+const API_BASE = "https://project-final-darius-1.onrender.com";
 
 export const useUserStore = create((set, get) => ({
   user: null,   // { id, username, group }

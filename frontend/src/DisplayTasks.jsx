@@ -349,7 +349,7 @@ export const DisplayTasks = () => {
             const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
             const fetchUrl = fileUrl.startsWith("/")
-              ? `http://localhost:8080${fileUrl}`
+              ? `https://project-final-darius-1.onrender.com${fileUrl}`
               : file.url;
 
             console.log("[File] Fetching:", fetchUrl, "with headers:", headers);

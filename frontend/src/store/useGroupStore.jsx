@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:8080";
+const API_BASE = import.meta.env.VITE_API_BASE || "https://project-final-darius-1.onrender.com";
 
 // Helper to get auth headers
 const getAuthHeaders = () => {

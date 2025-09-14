@@ -1,141 +1,58 @@
-# Final Project
+Final Project
 
-Replace this readme with your own information about your project.
+#This is a full-stack Task Management App where users can create, update, and manage tasks, projects, and groups with file uploads, authentication, and a responsive UI.
 
-Start by briefly describing the assignment in a sentence or two. Keep it short and to the point.
+# The problem
 
-## The problem
+#A lot of people including myself have task managing problems this app solves it with a vast array of methods. It also supports collaberation.
 
-Describe how you approached to problem, and what tools and techniques you used to solve it. How did you plan? What technologies did you use? If you had more time, what would be next?
+#The assignment was to build a complete full-stack application. I chose to create a task and project management system that supports collaboration, authentication, and file handling.
 
-## View it live
+#I planned the project around scalability and user experience, using:
 
-Every project should be deployed somewhere. Be sure to include the link to the deployed project so that the viewer can click around and see what it's all about.
+#Frontend: React (Vite) with Zustand for state management and Material-UI for accessible, responsive components.
 
-Task Management
+Backend: Node.js + Express with MongoDB, GridFS for file storage, Multer for uploads, and JWT for authentication.
 
-Tasks are the core unit of this app and have full CRUD support.
+Deployment: Netlify (frontend) and Render (backend).
 
-Features:
+If I had more time, I’d add real-time updates (WebSockets), richer collaboration tools, and more advanced analytics dashboards.
 
-Create Task: Users can create tasks with a title, description, due date, category, project association, and file attachments.
+## View  live 
+https://project-final-darius-1.onrender.com
 
-Update Task: Tasks can be updated to change details or add files; multiple files supported via Multer memory storage and stored in MongoDB GridFS.
+Frontend: https://project-final-darius.netlify.app/
 
-Delete Task: Tasks can be deleted individually; tasks linked to a project update project completion automatically.
+Key Highlights:
 
-Completion Tracking: Tasks can be marked completed/uncompleted. The system also allows marking all tasks completed at once.
+Frontend: React (Vite), Zustand for state management with persistence, Material-UI for responsive and accessible UI, Axios for API communication.
 
-Filters & Queries: Tasks can be filtered by status (completed/uncompleted/all) or by creation date.
+Backend: Node.js + Express with a RESTful API, MongoDB for storage, GridFS for file handling, Multer for uploads, and JWT for authentication.
 
-Implementation Details:
+Core Features:
 
-Zustand Store: The useTaskStore manages task and project state on the frontend, syncing with localStorage for offline persistence.
+Full task CRUD (create, update, delete, completion tracking).
 
-Project Auto-Completion: Whenever a task's completion state changes, the associated project's completion status is recalculated.
+Project management with automatic completion calculation.
 
-Backend Highlights:
+Group management (create, join, leave, assign projects).
 
-API endpoints include POST /tasks, GET /tasks, PUT /tasks/:id, DELETE /tasks/:id
+File uploads stored in MongoDB GridFS.
 
-GridFS allows large or multiple files per task, streamed efficiently to clients.
+Filtering, search, and pagination support.
 
-Project Management
+UX & Accessibility: Dark/light mode toggle, responsive layout, ARIA roles, modals, snackbars, and real-time state-driven updates.
 
-Projects group tasks and provide higher-level completion tracking.
+Deployment: Frontend on Netlify, backend on Render.
 
-Features:
+What it demonstrates:
 
-Add/delete projects.
+Proficiency in advanced state management (Zustand + persistence).
 
-Associate tasks with projects.
+Secure authentication with JWT and protected API routes.
 
-Projects automatically reflect the completion percentage based on their tasks.
+Scalable backend architecture with modular routes and file storage.
 
-Implementation Details:
+Strong focus on UX and accessibility through Material-UI and responsive design.
 
-Projects are stored in useTaskStore alongside tasks, and updateProjectCompletion automatically calculates if all tasks in the project are complete.
-
-When a project is deleted, all tasks linked to it are updated to remove the association.
-
-Group Management
-
-Groups allow collaborative work and task segregation.
-
-Features:
-
-Create, delete, join, leave groups.
-
-Assign projects to groups.
-
-View members and their task/project assignments.
-
-Pagination and search support for large numbers of groups.
-
-Frontend Implementation:
-
-The GroupsManagement component handles all UI interactions for group management.
-
-State is managed via useGroupStore (Zustand), fetching data from the backend.
-
-Snackbars provide real-time feedback for actions like joining, leaving, or creating groups.
-
-Backend Implementation:
-
-Express routes handle all group operations (/groups, /groups/:id/join, /groups/:id/leave, etc.)
-
-Protected by JWT auth middleware for security.
-
-Frontend Features
-
-Responsive & Accessible UI: Fully responsive layouts using Material-UI; ARIA roles on modals and dialogs for accessibility.
-
-Dark Mode: Toggleable dark/light mode using Material-UI theme provider, with background images and color palettes adjusted dynamically.
-
-Modals: Login, registration, and group management modals overlay the main content without breaking app flow.
-
-Task & Project Dashboard: Summary panels show total tasks, uncompleted tasks, and project completion percentages in real-time.
-
-State Management:
-
-Zustand stores ensure all state changes (tasks, projects, groups, user info) update the UI reactively.
-
-LocalStorage persistence allows offline resilience.
-
-Backend Highlights
-
-RESTful API Structure: Modular Express routes for tasks, groups, projects, and auth.
-
-File Handling: Multer handles in-memory file uploads, streamed to MongoDB GridFS.
-
-Authentication: JWT middleware protects sensitive routes, ensuring only authenticated users can access their group-specific tasks/projects.
-
-Error Handling & Logging: Console logs and HTTP status codes used throughout for debugging and feedback.
-
-Advanced Features & Architectural Decisions
-
-State-driven UI: Zustand stores are the single source of truth for tasks, projects, groups, and user authentication.
-
-Automatic Project Status: Projects reflect real-time task completion without manual updates.
-
-Secure & Modular Backend: Auth middleware, modular route files, and GridFS for scalable file storage.
-
-User Experience: Modals, snackbars, and responsive layout provide polished UX, with immediate feedback on all actions.
-
-Future-Ready: Architecture allows easy integration of real-time updates via WebSockets or additional collaborative features.
-
-Conclusion
-
-This project is a full-featured, modern task and project management system that balances frontend reactivity, backend security, and scalable architecture. It showcases:
-
-Advanced state management with Zustand
-
-JWT authentication
-
-MongoDB + GridFS file handling
-
-Group/project collaboration features
-
-Responsive, accessible UI
-
-It demonstrates full-stack proficiency, attention to UX, and scalable software design principles.
+Readiness for future enhancements like real-time collaboration.

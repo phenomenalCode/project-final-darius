@@ -8,7 +8,7 @@ import { authMiddleware } from "../middleware/authmiddleware.js";
 const router = express.Router();
 
 // ------------------ MONGODB GRIDFS SETUP ------------------
-const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/taskmanager";
+const mongoURI = process.env.MONGO_URI;
 const conn = mongoose.createConnection(mongoURI, {});
 
 let gfs;
@@ -80,7 +80,7 @@ router.get("/files/:filename", async (req, res) => {
       else res.destroy(err);
     });
   } catch (err) {
-    console.error("❌ Error serving file:", err);
+  
     res.status(500).json({ error: err.message });
   }
 });
@@ -107,7 +107,7 @@ router.post("/", authMiddleware, upload.array("files", 5), async (req, res) => {
 
     res.status(201).json(task);
   } catch (err) {
-    console.error("❌ Error creating task:", err);
+ 
     res.status(400).json({ error: err.message });
   }
 });
@@ -118,8 +118,6 @@ router.post("/", authMiddleware, upload.array("files", 5), async (req, res) => {
 router.post("/:taskId/files", authMiddleware, upload.single("file"), async (req, res) => {
   try {
     
-  console.log("[File GET] Filename:", req.params.filename);
-  console.log("[File GET] req.user:", req.user);
     const task = await Task.findById(req.params.taskId);
     if (!task) return res.status(404).json({ error: "Task not found" });
 
@@ -129,7 +127,7 @@ router.post("/:taskId/files", authMiddleware, upload.single("file"), async (req,
 
     res.json({ message: "File uploaded", task });
   } catch (err) {
-    console.error("❌ Error uploading file:", err);
+   
     res.status(500).json({ error: err.message });
   }
 });
@@ -143,7 +141,7 @@ router.get("/", authMiddleware, async (req, res) => {
 
     res.json(tasks);
   } catch (err) {
-    console.error("❌ Error fetching tasks:", err);
+    
     res.status(500).json({ error: err.message });
   }
 });
@@ -156,7 +154,7 @@ router.get("/:id", authMiddleware, async (req, res) => {
 
     res.json(task);
   } catch (err) {
-    console.error("❌ Error fetching task:", err);
+   
     res.status(500).json({ error: err.message });
   }
 });
@@ -177,7 +175,7 @@ router.put("/:id", authMiddleware, upload.array("files", 5), async (req, res) =>
 
     res.json(task);
   } catch (err) {
-    console.error("❌ Error updating task:", err);
+  
     res.status(400).json({ error: err.message });
   }
 });
@@ -190,7 +188,7 @@ router.delete("/:id", authMiddleware, async (req, res) => {
 
     res.json({ message: "Task deleted" });
   } catch (err) {
-    console.error("❌ Error deleting task:", err);
+    
     res.status(500).json({ error: err.message });
   }
 });

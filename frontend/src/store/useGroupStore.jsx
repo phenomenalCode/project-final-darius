@@ -18,7 +18,7 @@ export const useGroupStore = create((set, get) => ({
         headers: getAuthHeaders(),
         withCredentials: true, // keep this if your backend also sets cookies
       });
-          console.log("Fetched groups response:", data);
+         
       set({ groups: Array.isArray(data) ? data : [] });
     } catch (err) {
       console.error("Failed to fetch groups:", err.response?.data || err);
@@ -37,7 +37,7 @@ export const useGroupStore = create((set, get) => ({
       );
       set((state) => ({ groups: [...state.groups, data || { name, members: [] }] }));
     } catch (err) {
-      console.error("Failed to create group:", err.response?.data || err);
+    
       throw err;
     }
   },
@@ -50,7 +50,7 @@ export const useGroupStore = create((set, get) => ({
       });
       await get().fetchGroups();
     } catch (err) {
-      console.error("Failed to join group:", err.response?.data || err);
+     
       throw err;
     }
   },
@@ -63,7 +63,7 @@ export const useGroupStore = create((set, get) => ({
       });
       await get().fetchGroups();
     } catch (err) {
-      console.error("Failed to leave group:", err.response?.data || err);
+     
       throw err;
     }
   },
@@ -89,7 +89,7 @@ export const useGroupStore = create((set, get) => ({
       });
       await get().fetchGroups();
     } catch (err) {
-      console.error("Failed to set project:", err.response?.data || err);
+      
       throw err;
     }
   },setGroupProject: async (groupId, projectName) => {
@@ -101,7 +101,7 @@ export const useGroupStore = create((set, get) => ({
       ),
     }));
   } catch (err) {
-    console.error("Failed to set project:", err);
+  
     throw err;
   }
 },
@@ -114,7 +114,7 @@ removeProject: async (id) => {
     });
     await get().fetchGroups();
   } catch (err) {
-    console.error("Failed to remove project:", err.response?.data || err);
+  
     throw err;
   }
 },

@@ -1,18 +1,45 @@
 # Final Project
 
-Replace this readme with your own information about your project.
 
-Start by briefly describing the assignment in a sentence or two. Keep it short and to the point.
+Task Management App
 
-## The problem
+Another fullstack react app.  Now i feel i have a solid grasp on what is needed for a small scale app.
+Would be interesting to work on something for a longer period. 
+I did try cutting corners using gridmight not hve been the best option but i thought it would save me time.
 
-Describe how you approached to problem, and what tools and techniques you used to solve it. How did you plan? What technologies did you use? If you had more time, what would be next?
+it did not. This is the last time i try to cut corners when coding lesson is learned.
 
-## View it live
+Tech Stack
 
-Every project should be deployed somewhere. Be sure to include the link to the deployed project so that the viewer can click around and see what it's all about.
+Frontend
 
-Task Management
+React (with Vite for fast bundling)
+
+Zustand (state management with persistence)
+
+Material-UI (responsive, accessible UI components)
+
+Axios (API communication)
+
+Backend
+
+Node.js + Express (RESTful API)
+
+MongoDB (data storage)
+
+GridFS (file storage)
+
+Multer (file uploads)
+
+Authentication
+
+JWT (JSON Web Tokens for secure access)
+
+Deployment
+
+Netlify (frontend hosting)
+
+Render (backend hosting)
 
 Tasks are the core unit of this app and have full CRUD support.
 
@@ -124,9 +151,9 @@ User Experience: Modals, snackbars, and responsive layout provide polished UX, w
 
 Future-Ready: Architecture allows easy integration of real-time updates via WebSockets or additional collaborative features.
 
-Conclusion
+Summary of my project
 
-This project is a full-featured, modern task and project management system that balances frontend reactivity, backend security, and scalable architecture. It showcases:
+The project is a full-featured, modern task and project management system that balances frontend reactivity, backend security, and scalable architecture. It showcases:
 
 Advanced state management with Zustand
 

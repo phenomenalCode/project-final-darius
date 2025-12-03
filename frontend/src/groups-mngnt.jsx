@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+ import React, { useEffect, useState, useMemo } from "react";
 import {
   AppBar,
   Toolbar,
@@ -33,27 +33,15 @@ const GroupsManagement = () => {
   const { user, loadUserFromStorage } = useUserStore();
   const userId = user?.id;
 
-  const {
-    groups,
-    fetchGroups,
-    createGroup,
-    deleteGroup,
-    joinGroup,
-    leaveGroup,
-    setProject,
-    removeProject,
-  } = useGroupStore();
+  const { groups, fetchGroups, createGroup, deleteGroup, joinGroup, leaveGroup, setProject, removeProject } =
+    useGroupStore();
   const { projects } = useTaskStore();
 
   const [newGroup, setNewGroup] = useState("");
   const [search, setSearch] = useState("");
   const [projectInputs, setProjectInputs] = useState({});
   const [page, setPage] = useState(1);
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success",
-  });
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
   const [membersDialog, setMembersDialog] = useState({ open: false, members: [] });
 
   const itemsPerPage = 5;
@@ -65,10 +53,7 @@ const GroupsManagement = () => {
   }, [loadUserFromStorage, fetchGroups]);
 
   const filteredGroups = useMemo(
-    () =>
-      groups.filter((g) =>
-        g.name.toLowerCase().includes(search.toLowerCase())
-      ),
+    () => groups.filter((g) => g.name.toLowerCase().includes(search.toLowerCase())),
     [groups, search]
   );
 
@@ -133,201 +118,204 @@ const GroupsManagement = () => {
   const closeMembersDialog = () => setMembersDialog({ open: false, members: [] });
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      {/* Top Bar */}
-      <AppBar position="sticky">
-        <Toolbar
-          sx={{
-            flexWrap: "wrap",
-            gap: 1,
-            minHeight: { xs: 80, sm: 64 },
-            px: { xs: 2, sm: 3 },
-          }}
-        >
-          <Typography
-            variant="h6"
-            sx={{
-              flexGrow: 1,
-              minWidth: 0,
-            }}
-          >
-            Groups Management
-          </Typography>
+   <Box sx={{ flexGrow: 1 }}>
+  {/* Top Bar */}
+  <AppBar position="fixed">
+     <Toolbar
+    sx={{
+      flexWrap: "wrap",
+      gap: 1,
+      minHeight: { xs: 80, sm: 64 },
+      px: { xs: 2, sm: 3 },
+    }}
+  >
+      <Typography
+        variant="h6"
+        sx={{
+          flexGrow: 1,
+          minWidth: 0, // allows the search field to shrink
+        }}
+      >
+        Groups Management
+      </Typography>
+      <TextField
+        size="small"
+        placeholder="Search..."
+        variant="outlined"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        sx={{
+          bgcolor: "white",
+          borderRadius: 1,
+          width: { xs: "100%", sm: "250px" }, // full width on small screens
+          "& .MuiInputBase-input::placeholder": { color: "black", opacity: 1 },
+        }}
+      />
+    </Toolbar>
+  </AppBar>
+
+  {/* Spacer to prevent overlap */}
+  <Toolbar sx={{ minHeight: { xs: 80, sm: 64 } }} />
+
+  {/* Main Content */}
+  <Paper sx={{ p: 2 }}>
+
+      
+        {/* Create Group */}
+         <Box
+      display="flex"
+      gap={2}
+      mb={2}
+      sx={{ flexWrap: "wrap", alignItems: "center" }}
+    >
           <TextField
-            size="small"
-            placeholder="Search..."
-            variant="outlined"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            label="New Group Name"
+            value={newGroup}
+            onChange={(e) => setNewGroup(e.target.value)}
+            fullWidth
             sx={{
-              bgcolor: "white",
-              borderRadius: 1,
-              width: { xs: "100%", sm: "250px" },
-              "& .MuiInputBase-input::placeholder": { color: "black", opacity: 1 },
+              flex: "1 1 240px",
+              minWidth: { xs: "100%", sm: 240 },
             }}
           />
-        </Toolbar>
-      </AppBar>
-
-      {/* Main Content */}
-      <Box sx={{ pt: { xs: 2, sm: 0 } }}>
-        <Paper sx={{ p: 2 }}>
-          {/* Create Group */}
-          <Box
-            display="flex"
-            gap={2}
-            mb={2}
-            sx={{ flexWrap: "wrap", alignItems: "center" }}
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={handleCreate}
           >
-            <TextField
-              label="New Group Name"
-              value={newGroup}
-              onChange={(e) => setNewGroup(e.target.value)}
-              fullWidth
-              sx={{
-                flex: "1 1 240px",
-                minWidth: { xs: "100%", sm: 240 },
-              }}
+            Create
+          </Button>
+        </Box>
+
+        {/* Group List */}
+    <List>
+  {filteredGroups
+    .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+    .map((group) => {
+      const isMember = group.members?.some((m) => m._id === userId);
+      const currentProjectName = group.currentProject || "None";
+
+      return (
+        <React.Fragment key={group._id}>
+          <ListItem alignItems="flex-start">
+            <ListItemText
+              primary={group.name}
+              secondary={
+                <Box display="flex" flexDirection="column" gap={1} mt={1}>
+                  <Typography variant="body2">
+                    Members: {group.members?.length || 0}
+                  </Typography>
+
+                  {/* Project Controls */}
+                  <Box
+                    display="flex"
+                    flexDirection={{ xs: "column", sm: "row" }}
+                    alignItems={{ xs: "stretch", sm: "center" }}
+                    gap={1}
+                  >
+                    <Typography variant="body2">
+                      Project: {currentProjectName}
+                    </Typography>
+
+                    <TextField
+                      select
+                      size="small"
+                      value={projectInputs[group._id] || ""}
+                      onChange={(e) =>
+                        setProjectInputs((prev) => ({
+                          ...prev,
+                          [group._id]: e.target.value,
+                        }))
+                      }
+                      sx={{
+                        flex: { xs: "1 1 100%", sm: "1 1 140px" },
+                        minWidth: { xs: "100%", sm: 140 },
+                      }}
+                    >
+                      <MenuItem value="">-- Select Project --</MenuItem>
+                      {projects.map((p) => (
+                        <MenuItem key={p.id} value={p.id}>
+                          {p.name}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      onClick={() => handleSetProject(group._id)}
+                      sx={{ flex: { xs: "1 1 100%", sm: "0 0 auto" } }}
+                    >
+                      Assign
+                    </Button>
+
+                    <Button
+                      variant="contained"
+                      color="success"
+                      size="small"
+                      onClick={() => handleRemoveProject(group._id)}
+                      sx={{ flex: { xs: "1 1 100%", sm: "0 0 auto" } }}
+                    >
+                      Finish
+                    </Button>
+                  </Box>
+                </Box>
+              }
             />
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<AddIcon />}
-              onClick={handleCreate}
+
+            {/* Action Buttons */}
+            <Box
+              display="flex"
+              flexDirection={{ xs: "column", sm: "row" }}
+              gap={1}
+              mt={{ xs: 1, sm: 0 }}
             >
-              Create
-            </Button>
-          </Box>
+              <Button
+                onClick={() => handleJoinLeave(group, isMember)}
+                startIcon={<GroupIcon />}
+                variant="contained"
+                color="primary"
+                size="small"
+                sx={{ width: { xs: "100%", sm: "auto" } }}
+              >
+                {isMember ? "Leave" : "Join"}
+              </Button>
 
-          {/* Group List */}
-          <List>
-            {filteredGroups
-              .slice((page - 1) * itemsPerPage, page * itemsPerPage)
-              .map((group) => {
-                const isMember = group.members?.some((m) => m._id === userId);
-                const currentProjectName = group.currentProject || "None";
+              <Button
+                size="small"
+                variant="contained"
+                color="primary"
+                onClick={() => openMembersDialog(group.members)}
+                sx={{ width: { xs: "100%", sm: "auto" } }}
+              >
+                Members
+              </Button>
 
-                return (
-                  <React.Fragment key={group._id}>
-                    <ListItem alignItems="flex-start">
-                      <ListItemText
-                        primary={group.name}
-                        secondary={
-                          <Box display="flex" flexDirection="column" gap={1} mt={1}>
-                            <Typography variant="body2">
-                              Members: {group.members?.length || 0}
-                            </Typography>
+              <IconButton
+                edge="end"
+                onClick={() => handleDelete(group._id)}
+                sx={{ width: { xs: "100%", sm: "auto" } }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+          </ListItem>
+          <Divider />
+        </React.Fragment>
+      );
+    })}
+</List>
 
-                            {/* Project Controls */}
-                            <Box
-                              display="flex"
-                              flexDirection={{ xs: "column", sm: "row" }}
-                              alignItems={{ xs: "stretch", sm: "center" }}
-                              gap={1}
-                            >
-                              <Typography variant="body2">
-                                Project: {currentProjectName}
-                              </Typography>
-
-                              <TextField
-                                select
-                                size="small"
-                                value={projectInputs[group._id] || ""}
-                                onChange={(e) =>
-                                  setProjectInputs((prev) => ({
-                                    ...prev,
-                                    [group._id]: e.target.value,
-                                  }))
-                                }
-                                sx={{
-                                  flex: { xs: "1 1 100%", sm: "1 1 140px" },
-                                  minWidth: { xs: "100%", sm: 140 },
-                                }}
-                              >
-                                <MenuItem value="">-- Select Project --</MenuItem>
-                                {projects.map((p) => (
-                                  <MenuItem key={p.id} value={p.id}>
-                                    {p.name}
-                                  </MenuItem>
-                                ))}
-                              </TextField>
-
-                              <Button
-                                variant="contained"
-                                color="primary"
-                                size="small"
-                                onClick={() => handleSetProject(group._id)}
-                                sx={{ flex: { xs: "1 1 100%", sm: "0 0 auto" } }}
-                              >
-                                Assign
-                              </Button>
-
-                              <Button
-                                variant="contained"
-                                color="success"
-                                size="small"
-                                onClick={() => handleRemoveProject(group._id)}
-                                sx={{ flex: { xs: "1 1 100%", sm: "0 0 auto" } }}
-                              >
-                                Finish
-                              </Button>
-                            </Box>
-                          </Box>
-                        }
-                      />
-
-                      {/* Action Buttons */}
-                      <Box
-                        display="flex"
-                        flexDirection={{ xs: "column", sm: "row" }}
-                        gap={1}
-                        mt={{ xs: 1, sm: 0 }}
-                      >
-                        <Button
-                          onClick={() => handleJoinLeave(group, isMember)}
-                          startIcon={<GroupIcon />}
-                          variant="contained"
-                          color="primary"
-                          size="small"
-                          sx={{ width: { xs: "100%", sm: "auto" } }}
-                        >
-                          {isMember ? "Leave" : "Join"}
-                        </Button>
-
-                        <Button
-                          size="small"
-                          variant="contained"
-                          color="primary"
-                          onClick={() => openMembersDialog(group.members)}
-                          sx={{ width: { xs: "100%", sm: "auto" } }}
-                        >
-                          Members
-                        </Button>
-
-                        <IconButton
-                          edge="end"
-                          onClick={() => handleDelete(group._id)}
-                          sx={{ width: { xs: "100%", sm: "auto" } }}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Box>
-                    </ListItem>
-                    <Divider />
-                  </React.Fragment>
-                );
-              })}
-          </List>
-
-          {/* Pagination */}
-          <Pagination
-            count={Math.ceil(filteredGroups.length / itemsPerPage)}
-            page={page}
-            onChange={(e, val) => setPage(val)}
-            sx={{ mt: 2 }}
-          />
-        </Paper>
-      </Box>
+        {/* Pagination */}
+        <Pagination
+          count={Math.ceil(filteredGroups.length / itemsPerPage)}
+          page={page}
+          onChange={(e, val) => setPage(val)}
+          sx={{ mt: 2 }}
+        />
+      </Paper>
 
       {/* Snackbar */}
       <Snackbar

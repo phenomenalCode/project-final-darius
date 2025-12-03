@@ -196,7 +196,7 @@ const GroupsManagement = () => {
     size="small"
     sx={{
       width: { xs: "100%", sm: "auto" },
-      mt: { xs: 0, sm: "-15px" }, // move 15px up on larger screens
+      mt: { xs: 0, sm: "-30px" }, // move 15px up on larger screens
     }}
   >
     {isMember ? "Leave" : "Join"}
@@ -209,7 +209,7 @@ const GroupsManagement = () => {
     onClick={() => openMembersDialog(group.members)}
     sx={{
       width: { xs: "100%", sm: "auto" },
-      mt: { xs: 0, sm: "-15px" }, // move 15px up on larger screens
+      mt: { xs: 0, sm: "-30px" }, // move 15px up on larger screens
     }}
   >
     Members

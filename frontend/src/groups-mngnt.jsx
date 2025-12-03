@@ -125,7 +125,7 @@ useEffect(() => {
       
       <AppBar position="static">
 
-        <Toolbar>
+        <Toolbar sx={{ flexWrap: "wrap", gap: 1 }}>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Groups Management
           </Typography>
@@ -135,14 +135,15 @@ useEffect(() => {
             variant="outlined"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-      sx={{
-        bgcolor: "white",
-        borderRadius: 1,
-        "& .MuiInputBase-input::placeholder": {
-          color: "black",
-          opacity: 1,
-        },
-      }}
+       sx={{
+      bgcolor: "white",
+      borderRadius: 1,
+      width: { xs: "100%", sm: "auto" },  // FULL WIDTH on mobile
+      "& .MuiInputBase-input::placeholder": {
+        color: "black",
+        opacity: 1,
+      },
+    }}
     />
         </Toolbar>
       </AppBar>
@@ -150,12 +151,21 @@ useEffect(() => {
       {/* Main Content */}
       <Paper sx={{  p: 2 }}>
         {/* Create Group */}
-        <Box display="flex" gap={2} mb={2}>
+        <Box display="flex" gap={2} mb={2}
+          sx={{
+    flexWrap: "wrap",               // allow wrapping only when necessary
+    alignItems: "center",           // keeps vertical alignment on larger screens
+  }}>
           <TextField
             label="New Group Name"
             value={newGroup}
             onChange={(e) => setNewGroup(e.target.value)}
             fullWidth
+             sx={{
+      flex: "1 1 240px",            // grow to fill, but able to shrink; min base 240px
+      minWidth: { xs: "100%", 
+        maxWidth: "100%", sm: "240px" }, // mobile → full width if wrapped
+    }}
           />
           <Button variant="contained" color="primary" startIcon={<AddIcon />} onClick={handleCreate}>
             Create
@@ -198,7 +208,11 @@ useEffect(() => {
                         <Box mt={1} display="flex" flexDirection="column" gap={1}>
                           <Typography variant="body2">Members: {group.members?.length || 0}</Typography>
 
-                          <Box display="flex" alignItems="center" gap={1}>
+                          <Box display="flex" alignItems="center" gap={1}
+                           sx={{
+    flexWrap: { xs: "wrap", sm: "nowrap" },   // only wrap on small screens
+    rowGap: { xs: 1, sm: 0 },
+  }}>
                             <Typography variant="body2">Project: {currentProjectName}</Typography>
 
                             <TextField
@@ -208,7 +222,10 @@ useEffect(() => {
                               onChange={(e) =>
                                 setProjectInputs((prev) => ({ ...prev, [group._id]: e.target.value }))
                               }
-                              sx={{ minWidth: 150 }}
+                             sx={{
+    flex: "1 1 140px", maxWidth: "100%",         
+    minWidth: { xs: "100%", sm: 140 },   
+  }}
                             >
                               <MenuItem value="">-- Select Project --</MenuItem>
                               {projects.map((p) => (
@@ -228,6 +245,10 @@ useEffect(() => {
                               size="small"
                               color="success"
                               onClick={() => handleRemoveProject(group._id)}
+                                sx={{
+    flexShrink: 0,
+    width: { xs: "100%", sm: "auto" },
+  }}
                             >
                               Finish
                             </Button>

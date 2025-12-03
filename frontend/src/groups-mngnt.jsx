@@ -118,56 +118,38 @@ const GroupsManagement = () => {
   const closeMembersDialog = () => setMembersDialog({ open: false, members: [] });
 
   return (
-   <Box sx={{ flexGrow: 1 }}>
-  {/* Top Bar */}
-  <AppBar position="fixed">
-     <Toolbar
-    sx={{
-      flexWrap: "wrap",
-      gap: 1,
-      minHeight: { xs: 80, sm: 64 },
-      px: { xs: 2, sm: 3 },
-    }}
-  >
-      <Typography
-        variant="h6"
-        sx={{
-          flexGrow: 1,
-          minWidth: 0, // allows the search field to shrink
-        }}
-      >
-        Groups Management
-      </Typography>
-      <TextField
-        size="small"
-        placeholder="Search..."
-        variant="outlined"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        sx={{
-          bgcolor: "white",
-          borderRadius: 1,
-          width: { xs: "100%", sm: "250px" }, // full width on small screens
-          "& .MuiInputBase-input::placeholder": { color: "black", opacity: 1 },
-        }}
-      />
-    </Toolbar>
-  </AppBar>
+    <Box sx={{ flexGrow: 1, p: 3 }}>
+      {/* Top Bar */}
+      <AppBar position="static">
+        <Toolbar sx={{ flexWrap: "wrap", gap: 1 }}>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Groups Management
+          </Typography>
+          <TextField
+            size="small"
+            placeholder="Search..."
+            variant="outlined"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            sx={{
+              bgcolor: "white",
+              borderRadius: 1,
+              width: { xs: "100%", sm: "auto" },
+              "& .MuiInputBase-input::placeholder": { color: "black", opacity: 1 },
+            }}
+          />
+        </Toolbar>
+      </AppBar>
 
-  {/* Spacer to prevent overlap */}
-  <Toolbar sx={{ minHeight: { xs: 80, sm: 64 } }} />
-
-  {/* Main Content */}
-  <Paper sx={{ p: 2 }}>
-
-      
+      {/* Main Content */}
+      <Paper sx={{ p: 2 }}>
         {/* Create Group */}
-         <Box
-      display="flex"
-      gap={2}
-      mb={2}
-      sx={{ flexWrap: "wrap", alignItems: "center" }}
-    >
+        <Box
+          display="flex"
+          gap={2}
+          mb={2}
+          sx={{ flexWrap: "wrap", alignItems: "center" }}
+        >
           <TextField
             label="New Group Name"
             value={newGroup}

@@ -171,133 +171,124 @@ const GroupsManagement = () => {
         </Box>
 
         {/* Group List */}
-        <List>
-          {filteredGroups
-            .slice((page - 1) * itemsPerPage, page * itemsPerPage)
-            .map((group) => {
-              const isMember = group.members?.some((m) => m._id === userId);
-              const currentProjectName = group.currentProject || "None";
+    <List>
+  {filteredGroups
+    .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+    .map((group) => {
+      const isMember = group.members?.some((m) => m._id === userId);
+      const currentProjectName = group.currentProject || "None";
 
-              return (
-                <React.Fragment key={group._id}>
-                  <ListItem
-                    secondaryAction={
-                 <Box
-  display="flex"
-  flexDirection={{ xs: "column", sm: "row" }}
-  gap={1}
-  alignItems="center"
->
-  <Button
-    onClick={() => handleJoinLeave(group, isMember)}
-    startIcon={<GroupIcon />}
-    variant="contained"
-    color="primary"
-    size="small"
-    sx={{
-      width: { xs: "100%", sm: "auto" },
-      mt: { xs: 0, sm: "-30px" }, // move 15px up on larger screens
-    }}
-  >
-    {isMember ? "Leave" : "Join"}
-  </Button>
+      return (
+        <React.Fragment key={group._id}>
+          <ListItem alignItems="flex-start">
+            <ListItemText
+              primary={group.name}
+              secondary={
+                <Box display="flex" flexDirection="column" gap={1} mt={1}>
+                  <Typography variant="body2">
+                    Members: {group.members?.length || 0}
+                  </Typography>
 
-  <Button
-    size="small"
-    variant="contained"
-    color="primary"
-    onClick={() => openMembersDialog(group.members)}
-    sx={{
-      width: { xs: "100%", sm: "auto" },
-      mt: { xs: 0, sm: "-30px" }, // move 15px up on larger screens
-    }}
-  >
-    Members
-  </Button>
-
-
-
-                        <IconButton
-                          edge="end"
-                          onClick={() => handleDelete(group._id)}
-                          sx={{ width: { xs: "100%", sm: "auto" } }}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Box>
-                    }
+                  {/* Project Controls */}
+                  <Box
+                    display="flex"
+                    flexDirection={{ xs: "column", sm: "row" }}
+                    alignItems={{ xs: "stretch", sm: "center" }}
+                    gap={1}
                   >
-                    <ListItemText
-                      primary={group.name}
-                      secondary={
-                        <Box display="flex" flexDirection="column" gap={1} mt={1}>
-                          <Typography variant="body2">
-                            Members: {group.members?.length || 0}
-                          </Typography>
+                    <Typography variant="body2">
+                      Project: {currentProjectName}
+                    </Typography>
 
-                          {/* Project Controls */}
-                          <Box
-                            display="flex"
-                            flexWrap="wrap"
-                            alignItems="center"
-                            gap={1}
-                          >
-                            <Typography variant="body2">
-                              Project: {currentProjectName}
-                            </Typography>
-
-                            <TextField
-                              select
-                              size="small"
-                              value={projectInputs[group._id] || ""}
-                              onChange={(e) =>
-                                setProjectInputs((prev) => ({
-                                  ...prev,
-                                  [group._id]: e.target.value,
-                                }))
-                              }
-                              sx={{
-                                flex: { xs: "1 1 100%", sm: "1 1 140px" },
-                                minWidth: { xs: "100%", sm: 140 },
-                              }}
-                            >
-                              <MenuItem value="">-- Select Project --</MenuItem>
-                              {projects.map((p) => (
-                                <MenuItem key={p.id} value={p.id}>
-                                  {p.name}
-                                </MenuItem>
-                              ))}
-                            </TextField>
-
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              size="small"
-                              onClick={() => handleSetProject(group._id)}
-                              sx={{ flex: { xs: "1 1 100%", sm: "0 0 auto" } }}
-                            >
-                              Assign
-                            </Button>
-
-                            <Button
-                              variant="contained"
-                              color="success"
-                              size="small"
-                              onClick={() => handleRemoveProject(group._id)}
-                              sx={{ flex: { xs: "1 1 100%", sm: "0 0 auto" } }}
-                            >
-                              Finish
-                            </Button>
-                          </Box>
-                        </Box>
+                    <TextField
+                      select
+                      size="small"
+                      value={projectInputs[group._id] || ""}
+                      onChange={(e) =>
+                        setProjectInputs((prev) => ({
+                          ...prev,
+                          [group._id]: e.target.value,
+                        }))
                       }
-                    />
-                  </ListItem>
-                  <Divider />
-                </React.Fragment>
-              );
-            })}
-        </List>
+                      sx={{
+                        flex: { xs: "1 1 100%", sm: "1 1 140px" },
+                        minWidth: { xs: "100%", sm: 140 },
+                      }}
+                    >
+                      <MenuItem value="">-- Select Project --</MenuItem>
+                      {projects.map((p) => (
+                        <MenuItem key={p.id} value={p.id}>
+                          {p.name}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      onClick={() => handleSetProject(group._id)}
+                      sx={{ flex: { xs: "1 1 100%", sm: "0 0 auto" } }}
+                    >
+                      Assign
+                    </Button>
+
+                    <Button
+                      variant="contained"
+                      color="success"
+                      size="small"
+                      onClick={() => handleRemoveProject(group._id)}
+                      sx={{ flex: { xs: "1 1 100%", sm: "0 0 auto" } }}
+                    >
+                      Finish
+                    </Button>
+                  </Box>
+                </Box>
+              }
+            />
+
+            {/* Action Buttons */}
+            <Box
+              display="flex"
+              flexDirection={{ xs: "column", sm: "row" }}
+              gap={1}
+              mt={{ xs: 1, sm: 0 }}
+            >
+              <Button
+                onClick={() => handleJoinLeave(group, isMember)}
+                startIcon={<GroupIcon />}
+                variant="contained"
+                color="primary"
+                size="small"
+                sx={{ width: { xs: "100%", sm: "auto" } }}
+              >
+                {isMember ? "Leave" : "Join"}
+              </Button>
+
+              <Button
+                size="small"
+                variant="contained"
+                color="primary"
+                onClick={() => openMembersDialog(group.members)}
+                sx={{ width: { xs: "100%", sm: "auto" } }}
+              >
+                Members
+              </Button>
+
+              <IconButton
+                edge="end"
+                onClick={() => handleDelete(group._id)}
+                sx={{ width: { xs: "100%", sm: "auto" } }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+          </ListItem>
+          <Divider />
+        </React.Fragment>
+      );
+    })}
+</List>
 
         {/* Pagination */}
         <Pagination

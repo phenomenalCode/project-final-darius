@@ -120,7 +120,7 @@ const GroupsManagement = () => {
   return (
     <Box sx={{ flexGrow: 1, p: 3 }}>
       {/* Top Bar */}
-    <AppBar position="sticky">
+    <AppBar position="static">
 
       <Toolbar
   sx={{

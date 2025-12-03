@@ -182,31 +182,41 @@ const GroupsManagement = () => {
                 <React.Fragment key={group._id}>
                   <ListItem
                     secondaryAction={
-                      <Box
-                        display="flex"
-                        flexDirection={{ xs: "column", sm: "row" }}
-                        gap={1}
-                        alignItems="center"
-                      >
-                        <Button
-                          onClick={() => handleJoinLeave(group, isMember)}
-                          startIcon={<GroupIcon />}
-                          variant="contained"
-                          color="primary"
-                          size="small"
-                          sx={{ width: { xs: "100%", sm: "auto" } }}
-                        >
-                          {isMember ? "Leave" : "Join"}
-                        </Button>
-                        <Button
-                          size="small"
-                          variant="contained"
-                          color="primary"
-                          onClick={() => openMembersDialog(group.members)}
-                          sx={{ width: { xs: "100%", sm: "auto" } }}
-                        >
-                          Members
-                        </Button>
+                 <Box
+  display="flex"
+  flexDirection={{ xs: "column", sm: "row" }}
+  gap={1}
+  alignItems="center"
+>
+  <Button
+    onClick={() => handleJoinLeave(group, isMember)}
+    startIcon={<GroupIcon />}
+    variant="contained"
+    color="primary"
+    size="small"
+    sx={{
+      width: { xs: "100%", sm: "auto" },
+      mt: { xs: 0, sm: "-15px" }, // move 15px up on larger screens
+    }}
+  >
+    {isMember ? "Leave" : "Join"}
+  </Button>
+
+  <Button
+    size="small"
+    variant="contained"
+    color="primary"
+    onClick={() => openMembersDialog(group.members)}
+    sx={{
+      width: { xs: "100%", sm: "auto" },
+      mt: { xs: 0, sm: "-15px" }, // move 15px up on larger screens
+    }}
+  >
+    Members
+  </Button>
+
+
+
                         <IconButton
                           edge="end"
                           onClick={() => handleDelete(group._id)}

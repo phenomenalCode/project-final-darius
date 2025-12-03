@@ -122,24 +122,34 @@ const GroupsManagement = () => {
       {/* Top Bar */}
     <AppBar position="sticky">
 
-        <Toolbar sx={{ flexWrap: "wrap", gap: 1 }}>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Groups Management
-          </Typography>
-          <TextField
-            size="small"
-            placeholder="Search..."
-            variant="outlined"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            sx={{
-              bgcolor: "white",
-              borderRadius: 1,
-              width: { xs: "100%", sm: "auto" },
-              "& .MuiInputBase-input::placeholder": { color: "black", opacity: 1 },
-            }}
-          />
-        </Toolbar>
+      <Toolbar
+  sx={{
+    flexWrap: "wrap",
+    gap: 1,
+    minHeight: "auto !important",
+    p: 1
+  }}
+>
+  <Typography variant="h6" sx={{ flexGrow: 1 }}>
+    Groups Management
+  </Typography>
+
+  <TextField
+    size="small"
+    placeholder="Search..."
+    variant="outlined"
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+    sx={{
+      bgcolor: "white",
+      borderRadius: 1,
+      flexShrink: 1,
+      width: { xs: "100%", sm: "auto" },
+      "& .MuiInputBase-input::placeholder": { color: "black", opacity: 1 },
+    }}
+  />
+</Toolbar>
+
       </AppBar>
 
       {/* Main Content */}

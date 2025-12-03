@@ -120,7 +120,8 @@ const GroupsManagement = () => {
   return (
     <Box sx={{ flexGrow: 1, p: 3 }}>
       {/* Top Bar */}
-      <AppBar position="static">
+    <AppBar position="sticky">
+
         <Toolbar sx={{ flexWrap: "wrap", gap: 1 }}>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Groups Management
